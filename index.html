@@ -306,12 +306,46 @@ function doSubmit(){
     if(!el.value.trim())el.classList.add('err');else el.classList.remove('err');
   });
   if(!n||!dd)return;
-  var s=encodeURIComponent('Creativity Calendar suggestion: '+n);
-  var b=encodeURIComponent('Name: '+n+'\nDate: '+dd+'\nType: '+document.getElementById('ft').value+'\nContrib: '+document.getElementById('fc').value+'\nWhy: '+document.getElementById('fw').value+'\nEmail: '+document.getElementById('fe').value);
-  window.location.href='mailto:vetas.77@gmail.com?subject='+s+'&body='+b;
-  document.getElementById('sm').style.display='block';
-  ['fn','fd','ft','fc','fw','fe'].forEach(function(id){document.getElementById(id).value='';document.getElementById(id).classList.remove('err');});
-  setTimeout(function(){document.getElementById('sm').style.display='none';},5000);
+
+  var btn=document.querySelector('.sbtn');
+  btn.textContent='Sending...';
+  btn.disabled=true;
+
+  var data={
+    name: n,
+    date: dd,
+    type: document.getElementById('ft').value||'not specified',
+    contribution: document.getElementById('fc').value,
+    why: document.getElementById('fw').value,
+    email: document.getElementById('fe').value,
+    _subject: 'Creativity Calendar suggestion: '+n
+  };
+
+  fetch('https://formspree.io/f/mlgaqrkz',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify(data)
+  })
+  .then(function(r){return r.json();})
+  .then(function(result){
+    if(result.ok||result.next){
+      document.getElementById('sm').style.display='block';
+      ['fn','fd','ft','fc','fw','fe'].forEach(function(id){
+        document.getElementById(id).value='';
+        document.getElementById(id).classList.remove('err');
+      });
+      setTimeout(function(){document.getElementById('sm').style.display='none';},5000);
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+    btn.textContent='Submit suggestion →';
+    btn.disabled=false;
+  })
+  .catch(function(){
+    alert('Network error. Please try again.');
+    btn.textContent='Submit suggestion →';
+    btn.disabled=false;
+  });
 }
 
 render();
