@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Creativity Calendar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#F7F4EF;
+  --ink:#1A1714;
+  --faded:#8A8278;
+  --accent:#C8472A;
+  --accent2:#2A5C8A;
+  --line:rgba(26,23,20,0.12);
+  --card:#FFFFFF;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Mono',monospace;min-height:100vh;line-height:1.6}
+
+/* HEADER */
+.header{padding:3.5rem 2.5rem 2.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem}
+.header-left{}
+.title-eyebrow{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--faded);margin-bottom:0.75rem}
+.title-main{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:0.5rem}
+.title-tagline{font-size:12px;color:var(--faded);letter-spacing:0.05em}
+.header-right{text-align:right}
+.header-meta{font-size:11px;color:var(--faded);line-height:1.8}
+.wcid-badge{display:inline-flex;align-items:center;gap:6px;margin-top:0.5rem;padding:5px 12px;border:1px solid rgba(200,71,42,0.3);border-radius:20px;font-size:10px;letter-spacing:0.08em;color:var(--accent)}
+.wcid-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* STATS */
+.stats-bar{display:flex;gap:0;border-bottom:1px solid var(--line)}
+.stat{flex:1;padding:1.25rem 2rem;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1;color:var(--ink)}
+.stat-l{font-size:10px;color:var(--faded);letter-spacing:0.1em;text-transform:uppercase}
+
+/* CONTROLS */
+.controls{padding:1rem 2.5rem;border-bottom:1px solid var(--line);display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.filters{display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap}
+.filter-label{font-size:10px;color:var(--faded);letter-spacing:0.1em;text-transform:uppercase;margin-right:0.4rem}
+.tag{font-size:11px;padding:5px 14px;border-radius:20px;border:1px solid var(--line);cursor:pointer;background:transparent;color:var(--faded);font-family:'DM Mono',monospace;letter-spacing:0.04em;transition:all 0.15s}
+.tag:hover{border-color:var(--ink);color:var(--ink)}
+.tag.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.search-wrap{position:relative}
+.search-input{font-family:'DM Mono',monospace;font-size:12px;padding:6px 14px 6px 32px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:20px;outline:none;width:220px;transition:border 0.15s}
+.search-input:focus{border-color:var(--ink)}
+.search-input::placeholder{color:rgba(138,130,120,0.5)}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--faded);pointer-events:none}
+
+/* TIMELINE */
+.timeline-wrap{padding:0 2.5rem 5rem}
+.year-group{margin-top:3rem}
+.year-group.hidden{display:none}
+.year-label{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;font-style:italic;color:rgba(138,130,120,0.5);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:0.75rem}
+.year-label-sub{font-size:11px;color:var(--faded);font-family:'DM Mono',monospace;font-style:normal;letter-spacing:0.06em}
+
+.entry{display:grid;grid-template-columns:100px 28px 1fr;gap:0;align-items:start;padding:0.9rem 0;border-bottom:1px solid rgba(26,23,20,0.06);transition:background 0.1s;position:relative}
+.entry:hover{background:rgba(26,23,20,0.02)}
+.entry.hidden{display:none}
+.entry-date{font-size:11px;color:var(--faded);letter-spacing:0.05em;padding-top:3px}
+.entry-date .d-month{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em}
+.entry-date .d-day{font-size:1.15rem;font-family:'Playfair Display',serif;font-weight:400;line-height:1.1;color:var(--ink)}
+.entry-dot{display:flex;justify-content:center;padding-top:7px}
+.entry-dot-inner{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0}
+.type-person .entry-dot-inner{background:var(--accent2)}
+.type-event .entry-dot-inner{background:var(--accent)}
+.type-book .entry-dot-inner{background:var(--faded)}
+.entry-body{padding-left:0.5rem}
+.entry-type-badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:5px;font-weight:400}
+.type-person .entry-type-badge{background:rgba(42,92,138,0.08);color:var(--accent2)}
+.type-event .entry-type-badge{background:rgba(200,71,42,0.08);color:var(--accent)}
+.type-book .entry-type-badge{background:rgba(26,23,20,0.06);color:var(--faded)}
+.entry-name{font-size:15px;font-weight:400;margin-bottom:3px;line-height:1.3}
+.entry-contrib{font-size:12px;color:var(--faded);line-height:1.5}
+
+/* NO RESULTS */
+.no-results{padding:3rem;text-align:center;font-size:13px;color:var(--faded);display:none}
+
+/* SUBMIT SECTION */
+.submit-section{margin:0 2.5rem 5rem;padding:2.5rem;border:1px solid var(--line)}
+.submit-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;margin-bottom:0.4rem}
+.submit-desc{font-size:12px;color:var(--faded);margin-bottom:2rem;line-height:1.7;max-width:540px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--faded)}
+.form-input{font-family:'DM Mono',monospace;font-size:13px;padding:9px 13px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;outline:none;transition:border 0.15s;-webkit-appearance:none}
+.form-input:focus{border-color:var(--ink)}
+.form-input::placeholder{color:rgba(138,130,120,0.4)}
+.form-input.error{border-color:var(--accent)}
+.submit-btn{font-family:'DM Mono',monospace;font-size:12px;padding:11px 28px;background:var(--ink);color:var(--cream);border:none;cursor:pointer;letter-spacing:0.08em;transition:opacity 0.15s}
+.submit-btn:hover{opacity:0.75}
+.submit-success{font-size:12px;color:var(--accent2);margin-top:0.75rem;display:none;letter-spacing:0.04em}
+
+/* FOOTER */
+footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--faded)}
+.footer-meta{font-size:10px;color:var(--faded);letter-spacing:0.08em}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .header{padding:2rem 1.25rem}
+  .stats-bar{flex-wrap:wrap}
+  .stat{min-width:50%;border-right:none;border-bottom:1px solid var(--line)}
+  .controls{padding:1rem 1.25rem}
+  .timeline-wrap{padding:0 1.25rem 4rem}
+  .submit-section{margin:0 1.25rem 4rem;padding:1.5rem}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+  footer{padding:1.5rem 1.25rem}
+  .entry{grid-template-columns:80px 24px 1fr}
+  .search-input{width:160px}
+  .header-right{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="title-eyebrow">Creative Happens Club presents</div>
+    <h1 class="title-main">The Creativity<br>Calendar</h1>
+    <div class="title-tagline">Birthdays · landmark works · key events in creative thought</div>
+  </div>
+  <div class="header-right">
+    <div class="header-meta">
+      Curated by Creative Happens<br>
+      Open for contributions
+    </div>
+    <div class="wcid-badge">
+      <span class="wcid-dot"></span>
+      World Creativity &amp; Innovation Day — 21 April
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-n" id="stat-people">0</span><span class="stat-l">people</span></div>
+  <div class="stat"><span class="stat-n" id="stat-events">0</span><span class="stat-l">events</span></div>
+  <div class="stat"><span class="stat-n" id="stat-books">0</span><span class="stat-l">books</span></div>
+  <div class="stat"><span class="stat-n" id="stat-total">0</span><span class="stat-l">total entries</span></div>
+</div>
+
+<div class="controls">
+  <div class="filters">
+    <span class="filter-label">show</span>
+    <button class="tag active" data-filter="all">all</button>
+    <button class="tag" data-filter="person">people</button>
+    <button class="tag" data-filter="event">events</button>
+    <button class="tag" data-filter="book">books</button>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="search" type="text" placeholder="search name or contribution...">
+  </div>
+</div>
+
+<div class="timeline-wrap">
+  <div id="timeline"></div>
+  <div class="no-results" id="no-results">No entries match your search.</div>
+</div>
+
+<section class="submit-section" id="suggest">
+  <h2 class="submit-title">Suggest an entry</h2>
+  <p class="submit-desc">Know a person, event, or publication that belongs here? Fill in the details below. All suggestions are reviewed before being added to the calendar.</p>
+  <div class="form-grid">
+    <div class="form-group">
+      <label class="form-label" for="f-name">Name / event</label>
+      <input class="form-input" id="f-name" type="text" placeholder="e.g. Edward de Bono">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-date">Date</label>
+      <input class="form-input" id="f-date" type="text" placeholder="e.g. 19 May 1933">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-type">Type</label>
+      <select class="form-input" id="f-type">
+        <option value="">— select —</option>
+        <option value="person">Person (birthday)</option>
+        <option value="event">Event / founding</option>
+        <option value="book">Book / publication</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-contrib">Contribution / reason</label>
+      <input class="form-input" id="f-contrib" type="text" placeholder="e.g. Lateral Thinking">
+    </div>
+    <div class="form-group full">
+      <label class="form-label" for="f-why">Why it belongs here <span style="opacity:0.5">(optional)</span></label>
+      <input class="form-input" id="f-why" type="text" placeholder="Any context that helps us evaluate">
+    </div>
+    <div class="form-group full">
+      <label class="form-label" for="f-email">Your email <span style="opacity:0.5">(optional, for follow-up)</span></label>
+      <input class="form-input" id="f-email" type="email" placeholder="you@example.com">
+    </div>
+  </div>
+  <button class="submit-btn" onclick="submitEntry()">Submit suggestion →</button>
+  <div class="submit-success" id="submit-msg">✓ Thank you — your suggestion has been received.</div>
+</section>
+
+<footer>
+  <span class="footer-logo">The Creativity Calendar</span>
+  <span class="footer-meta">Creative Happens Club · creativehappens.ru · Open for contributions</span>
+</footer>
+
+<script>
+const DATA = [
+  {year:1888,month:5,day:24,name:"Alex Osborn",type:"person",contrib:"Brainstorming, Creative Problem Solving (CPS)"},
+  {year:1895,month:4,day:17,name:"Vladimir Propp",type:"person",contrib:"Morphology of the Folktale — structure of narrative"},
+  {year:1896,month:11,day:17,name:"Lev Vygotsky",type:"person",contrib:"Thinking and Speech — zones of proximal development"},
+  {year:1922,month:6,day:11,name:"Irving Goffman",type:"person",contrib:"Frame Analysis — theoretical basis of CRAFT methodology"},
+  {year:1926,month:10,day:15,name:"Genrich Altshuller",type:"person",contrib:"TRIZ — Theory of Inventive Problem Solving"},
+  {year:1933,month:5,day:19,name:"Edward de Bono",type:"person",contrib:"Lateral Thinking, Six Thinking Hats"},
+  {year:1934,month:9,day:29,name:"Mihaly Csikszentmihalyi",type:"person",contrib:"Flow theory, 4C model of creativity"},
+  {year:1935,month:12,day:25,name:"Donald Norman",type:"person",contrib:"The Design of Everyday Things"},
+  {year:1940,month:null,day:null,name:"Michael Michalko",type:"person",contrib:"Thinkertoys, Cracking Creativity"},
+  {year:1941,month:3,day:13,name:"Donella Meadows",type:"person",contrib:"Thinking in Systems"},
+  {year:1942,month:6,day:2,name:"Tony Buzan",type:"person",contrib:"Mind Mapping"},
+  {year:1943,month:10,day:30,name:"Rolf Faste",type:"person",contrib:"Introduced Design Thinking into Stanford curriculum"},
+  {year:1944,month:null,day:null,name:"John Hegarty",type:"person",contrib:"BBH — «When the world zigs, zag»"},
+  {year:1946,month:1,day:20,name:"David Lynch",type:"person",contrib:"Catching the Big Fish — creativity and consciousness"},
+  {year:1947,month:6,day:22,name:"Bruno Latour",type:"person",contrib:"Actor-Network Theory, frame reassembly"},
+  {year:1947,month:null,day:null,name:"Dave Trott",type:"person",contrib:"Creative Mischief, Predatory Thinking"},
+  {year:1948,month:3,day:4,name:"Julia Cameron",type:"person",contrib:"The Artist's Way — morning pages, creative unblocking"},
+  {year:1948,month:5,day:15,name:"Brian Eno",type:"person",contrib:"Oblique Strategies — generative creativity"},
+  {year:1948,month:6,day:22,name:"Roger von Oech",type:"person",contrib:"Whack on the Side of the Head"},
+  {year:1950,month:3,day:4,name:"Ken Robinson",type:"person",contrib:"Do Schools Kill Creativity? — most-watched TED talk"},
+  {year:1950,month:10,day:26,name:"Teresa Amabile",type:"person",contrib:"Intrinsic motivation and creativity research"},
+  {year:1951,month:9,day:23,name:"David Kelley",type:"person",contrib:"IDEO founder, Design Thinking"},
+  {year:1952,month:4,day:6,name:"Clayton Christensen",type:"person",contrib:"Jobs to Be Done, Disruptive Innovation"},
+  {year:1955,month:3,day:21,name:"Robert Dilts",type:"person",contrib:"NLP Logical Levels, Strategies of Genius"},
+  {year:1960,month:6,day:10,name:"Scott McCloud",type:"person",contrib:"Understanding Comics — visual grammar of storytelling"},
+  {year:1960,month:11,day:10,name:"Neil Gaiman",type:"person",contrib:"Make Good Art — storytelling and creative freedom"},
+  {year:1962,month:null,day:null,name:"Mark Levy",type:"person",contrib:"Freewriting — Accidental Genius"},
+  {year:1962,month:6,day:24,name:"Tim Brown",type:"person",contrib:"IDEO CEO, Change by Design"},
+  {year:1963,month:3,day:10,name:"Rick Rubin",type:"person",contrib:"The Creative Act — creativity as a way of being"},
+  {year:1974,month:9,day:11,name:"Andrey Kurpatov",type:"person",contrib:"Methodology of Thinking, brain science popularisation"},
+  {year:1977,month:null,day:null,name:"Jake Knapp",type:"person",contrib:"Design Sprint — 5-day creative problem solving"},
+  {year:1979,month:9,day:11,name:"Eliezer Yudkowsky",type:"person",contrib:"HPMOR, Rationality — applied rational thinking"},
+  {year:1981,month:8,day:13,name:"Adam Grant",type:"person",contrib:"Originals — how non-conformists move the world"},
+  {year:null,month:4,day:26,name:"Vasily Lebedev",type:"person",contrib:"CRAFT methodology — IKRA School of Creative Thinking"},
+
+  {year:1939,month:null,day:null,name:"First brainstorming session",type:"event",contrib:"Alex Osborn, New York — a structured group creativity technique"},
+  {year:1946,month:null,day:null,name:"TRIZ development begins",type:"event",contrib:"Genrich Altshuller starts systematic research into invention"},
+  {year:1954,month:null,day:null,name:"Creative Education Foundation founded",type:"event",contrib:"Buffalo, NY — home of the CPS methodology"},
+  {year:1975,month:null,day:null,name:"Oblique Strategies first published",type:"event",contrib:"Brian Eno + Peter Schmidt — 100 cards for creative unblocking"},
+  {year:1991,month:null,day:null,name:"IDEO founded",type:"event",contrib:"Merger of David Kelley Design, Moggridge Associates, Matrix Product Design"},
+  {year:2006,month:null,day:null,name:"TED: Do Schools Kill Creativity?",type:"event",contrib:"Ken Robinson — most-watched TED talk in history"},
+  {year:2010,month:null,day:null,name:"Design Sprint created at Google",type:"event",contrib:"Jake Knapp — now used by thousands of teams worldwide"},
+  {year:2017,month:null,day:null,name:"CRAFT methodology developed",type:"event",contrib:"Vasily Lebedev at IKRA — youngest creative methodology in the world"},
+  {year:2017,month:null,day:null,name:"Creative Happens founded",type:"event",contrib:"First creative incubator in Russia"},
+  {year:2018,month:4,day:21,name:"World Creativity & Innovation Day",type:"event",contrib:"Officially recognised by the UN — celebrated every 21 April"},
+
+  {year:1953,month:null,day:null,name:"Applied Imagination",type:"book",contrib:"Alex Osborn — the original brainstorming manual"},
+  {year:1967,month:null,day:null,name:"The Use of Lateral Thinking",type:"book",contrib:"Edward de Bono — thinking sideways"},
+  {year:1985,month:null,day:null,name:"Six Thinking Hats",type:"book",contrib:"Edward de Bono — parallel thinking framework"},
+  {year:1990,month:null,day:null,name:"The Artist's Way",type:"book",contrib:"Julia Cameron — 12-week creative recovery programme"},
+  {year:1993,month:null,day:null,name:"Understanding Comics",type:"book",contrib:"Scott McCloud — visual language and sequential art"},
+  {year:1996,month:null,day:null,name:"Creativity: Flow",type:"book",contrib:"Mihaly Csikszentmihalyi — optimal experience and creative genius"},
+  {year:1997,month:null,day:null,name:"The Innovator's Dilemma",type:"book",contrib:"Clayton Christensen — disruptive innovation theory"},
+  {year:2023,month:1,day:17,name:"The Creative Act: A Way of Being",type:"book",contrib:"Rick Rubin — creativity as spiritual practice"},
+];
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const TYPE_LABELS = {person:'born',event:'event',book:'published'};
+
+let activeFilter = 'all';
+let searchQuery = '';
+
+function sortKey(e){
+  const y = e.year != null ? e.year : 9999;
+  const m = e.month || 0;
+  const d = e.day || 0;
+  return y * 10000 + m * 100 + d;
+}
+
+function formatDate(e){
+  if(e.year == null){
+    if(e.month && e.day) return {top: MONTHS[e.month-1]+' '+e.day, bottom:'recurring'};
+    return {top:'—',bottom:''};
+  }
+  if(!e.month) return {top: String(e.year), bottom:''};
+  if(!e.day) return {top: MONTHS[e.month-1], bottom: String(e.year)};
+  return {top: MONTHS[e.month-1]+' '+e.day, bottom: String(e.year)};
+}
+
+function isVisible(e){
+  const typeOk = activeFilter === 'all' || e.type === activeFilter;
+  if(!searchQuery) return typeOk;
+  const q = searchQuery.toLowerCase();
+  const textOk = e.name.toLowerCase().includes(q) || e.contrib.toLowerCase().includes(q);
+  return typeOk && textOk;
+}
+
+function render(){
+  const sorted = [...DATA].sort((a,b) => sortKey(a)-sortKey(b));
+
+  document.getElementById('stat-people').textContent = DATA.filter(e=>e.type==='person').length;
+  document.getElementById('stat-events').textContent = DATA.filter(e=>e.type==='event').length;
+  document.getElementById('stat-books').textContent = DATA.filter(e=>e.type==='book').length;
+  document.getElementById('stat-total').textContent = DATA.length;
+
+  const groups = {};
+  for(const e of sorted){
+    const k = e.year != null ? e.year : 'recurring';
+    if(!groups[k]) groups[k] = [];
+    groups[k].push(e);
+  }
+
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = '';
+
+  const keys = Object.keys(groups).sort((a,b) => a==='recurring' ? 1 : Number(a)-Number(b));
+  let totalVisible = 0;
+
+  for(const yr of keys){
+    const entries = groups[yr];
+    const visibleEntries = entries.filter(isVisible);
+    if(visibleEntries.length === 0) continue;
+    totalVisible += visibleEntries.length;
+
+    const grp = document.createElement('div');
+    grp.className = 'year-group';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'year-label';
+    lbl.innerHTML = `${yr === 'recurring' ? 'recurring dates' : yr} <span class="year-label-sub">${visibleEntries.length} entr${visibleEntries.length===1?'y':'ies'}</span>`;
+    grp.appendChild(lbl);
+
+    for(const e of visibleEntries){
+      const fd = formatDate(e);
+      const row = document.createElement('div');
+      row.className = `entry type-${e.type}`;
+      row.innerHTML = `
+        <div class="entry-date">
+          <span class="d-month">${fd.top}</span>
+          <span class="d-day">${fd.bottom}</span>
+        </div>
+        <div class="entry-dot"><div class="entry-dot-inner"></div></div>
+        <div class="entry-body">
+          <span class="entry-type-badge">${TYPE_LABELS[e.type]}</span>
+          <div class="entry-name">${e.name}</div>
+          <div class="entry-contrib">${e.contrib}</div>
+        </div>`;
+      grp.appendChild(row);
+    }
+
+    tl.appendChild(grp);
+  }
+
+  const noRes = document.getElementById('no-results');
+  noRes.style.display = totalVisible === 0 ? 'block' : 'none';
+}
+
+document.querySelectorAll('.tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tag').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('search').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  render();
+});
+
+function submitEntry(){
+  const name = document.getElementById('f-name').value.trim();
+  const date = document.getElementById('f-date').value.trim();
+  const type = document.getElementById('f-type').value;
+  const contrib = document.getElementById('f-contrib').value.trim();
+  const why = document.getElementById('f-why').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+
+  let valid = true;
+  ['f-name','f-date'].forEach(id => {
+    const el = document.getElementById(id);
+    if(!el.value.trim()){ el.classList.add('error'); valid=false; }
+    else el.classList.remove('error');
+  });
+
+  if(!valid) return;
+
+  const subject = encodeURIComponent('Creativity Calendar suggestion: ' + name);
+  const body = encodeURIComponent(
+    'Name / event: ' + name + '\n' +
+    'Date: ' + date + '\n' +
+    'Type: ' + (type||'not specified') + '\n' +
+    'Contribution: ' + (contrib||'—') + '\n' +
+    'Why it belongs: ' + (why||'—') + '\n' +
+    'From: ' + (email||'anonymous')
+  );
+  window.location.href = 'mailto:hello@creativehappens.ru?subject=' + subject + '&body=' + body;
+
+  document.getElementById('submit-msg').style.display = 'block';
+  ['f-name','f-date','f-type','f-contrib','f-why','f-email'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('error');
+  });
+  setTimeout(() => { document.getElementById('submit-msg').style.display = 'none'; }, 5000);
+}
+
+render();
+</script>
+</body>
+</html>
