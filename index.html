@@ -201,9 +201,17 @@ var D=[
   {y:1991,m:0,d:0,n:"IDEO founded",t:"event",c:"Merger of David Kelley Design, Moggridge Associates, Matrix Product Design"},
   {y:2006,m:0,d:0,n:"TED: Do Schools Kill Creativity?",t:"event",c:"Ken Robinson — most-watched TED talk in history"},
   {y:2010,m:0,d:0,n:"Design Sprint created at Google",t:"event",c:"Jake Knapp — now used by thousands of teams worldwide"},
+  {y:2009,m:0,d:0,n:"IKRA School of Creative Thinking founded",t:"event",c:"Moscow — Russia's first school of creative thinking, Vasily Lebedev"},
   {y:2017,m:0,d:0,n:"CRAFT methodology developed",t:"event",c:"Vasily Lebedev at IKRA — youngest creative methodology in the world"},
   {y:2017,m:0,d:0,n:"Creative Happens founded",t:"event",c:"First creative incubator in Russia"},
   {y:2018,m:4,d:21,n:"World Creativity & Innovation Day",t:"event",c:"Officially recognised by the UN — celebrated every 21 April"},
+  {y:1996,m:0,d:0,n:"Lego Serious Play concept created",t:"event",c:"Johan Roos & Bart Victor at IMD Lausanne — strategy through hands-on building"},
+  {y:1999,m:0,d:0,n:"First LSP academic paper published",t:"event",c:"Roos & Victor in European Management Journal — legitimising serious play"},
+  {y:2001,m:0,d:0,n:"Lego Serious Play officially launched",t:"event",c:"Commercial product release — Executive Discovery LLC"},
+  {y:2010,m:0,d:0,n:"LSP released as open source",t:"event",c:"LEGO Group publishes method under Creative Commons license"},
+  {y:1967,m:0,d:0,n:"World's first Master's degree in Creativity",t:"event",c:"SUNY Buffalo State — International Center for Studies in Creativity"},
+  {y:2004,m:0,d:0,n:"Stanford d.school founded",t:"event",c:"David Kelley & Bernard Roth — home of Design Thinking education"},
+  {y:2026,m:0,d:0,n:"World's first DPS in Creativity & Change Leadership",t:"event",c:"SUNY Buffalo State — first doctoral degree fully dedicated to creativity"},
   {y:1953,m:0,d:0,n:"Applied Imagination",t:"book",c:"Alex Osborn — the original brainstorming manual"},
   {y:1967,m:0,d:0,n:"The Use of Lateral Thinking",t:"book",c:"Edward de Bono"},
   {y:1985,m:0,d:0,n:"Six Thinking Hats",t:"book",c:"Edward de Bono — parallel thinking framework"},
@@ -300,7 +308,7 @@ function doSubmit(){
   if(!n||!dd)return;
   var s=encodeURIComponent('Creativity Calendar suggestion: '+n);
   var b=encodeURIComponent('Name: '+n+'\nDate: '+dd+'\nType: '+document.getElementById('ft').value+'\nContrib: '+document.getElementById('fc').value+'\nWhy: '+document.getElementById('fw').value+'\nEmail: '+document.getElementById('fe').value);
-  window.location.href='mailto:hello@creativehappens.ru?subject='+s+'&body='+b;
+  window.location.href='mailto:vetas.77@gmail.com?subject='+s+'&body='+b;
   document.getElementById('sm').style.display='block';
   ['fn','fd','ft','fc','fw','fe'].forEach(function(id){document.getElementById(id).value='';document.getElementById(id).classList.remove('err');});
   setTimeout(function(){document.getElementById('sm').style.display='none';},5000);
