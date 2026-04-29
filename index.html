@@ -7,8 +7,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cream:#F7F4EF;--ink:#1A1714;--faded:#8A8278;
-  --accent:#C8472A;--accent2:#2A5C8A;--line:rgba(26,23,20,0.12);
+  --cream:#F4EFE6;--ink:#13100D;--faded:#7A7166;
+  --accent:#E63A1A;--accent2:#1F5BB8;--accent3:#E8A317;
+  --line:rgba(19,16,13,0.18);
   --serif:Georgia,'Times New Roman',serif;
   --mono:'Courier New',Courier,monospace;
 }
@@ -39,28 +40,23 @@ body{background:var(--cream);color:var(--ink);font-family:var(--mono);min-height
 .si:focus{border-color:var(--ink)}
 .si::placeholder{color:rgba(138,130,120,0.5)}
 .sicon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--faded);pointer-events:none}
-.timeline-wrap{padding:0 2.5rem 5rem}
-.yg{margin-top:3rem}
-.yl{font-family:var(--serif);font-size:1.6rem;font-weight:400;font-style:italic;color:rgba(138,130,120,0.6);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:0.75rem}
-.yl-sub{font-size:11px;color:var(--faded);font-family:var(--mono);font-style:normal;letter-spacing:0.06em}
-.entry{display:grid;grid-template-columns:100px 28px 1fr;align-items:start;padding:0.9rem 0;border-bottom:1px solid rgba(26,23,20,0.06);transition:background 0.1s}
-.entry:hover{background:rgba(26,23,20,0.02)}
-.entry.hidden{display:none}
-.edate{font-size:11px;color:var(--faded);padding-top:3px}
-.dm{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.1em}
-.dd{font-size:1.1rem;font-family:var(--serif);font-weight:400;line-height:1.1;color:var(--ink)}
-.edot{display:flex;justify-content:center;padding-top:8px}
-.edot-i{width:7px;height:7px;border-radius:50%;background:var(--line)}
-.type-person .edot-i{background:var(--accent2)}
-.type-event .edot-i{background:var(--accent)}
-.type-book .edot-i{background:var(--faded)}
-.ebody{padding-left:0.5rem}
-.badge{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:10px;display:inline-block;margin-bottom:5px}
-.type-person .badge{background:rgba(42,92,138,0.08);color:var(--accent2)}
-.type-event .badge{background:rgba(200,71,42,0.08);color:var(--accent)}
-.type-book .badge{background:rgba(26,23,20,0.06);color:var(--faded)}
-.ename{font-size:15px;margin-bottom:3px;line-height:1.3}
-.econtrib{font-size:12px;color:var(--faded);line-height:1.5}
+.timeline-wrap{padding:1.5rem 2.5rem 5rem}
+.dec{margin-top:2.75rem}
+.dec:first-child{margin-top:1rem}
+.dec-h{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;line-height:1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:2px solid var(--ink);display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
+.dec-h-sub{font-family:var(--mono);font-size:11px;color:var(--faded);letter-spacing:0.1em;text-transform:uppercase;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:0.6rem}
+.cell{aspect-ratio:1;padding:0.85rem 0.95rem;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:transform 0.12s ease, box-shadow 0.12s ease;cursor:default}
+.cell:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink);z-index:2}
+.cell.hidden{display:none}
+.cell.type-person{background:var(--accent2);color:var(--cream)}
+.cell.type-event{background:var(--accent);color:var(--cream)}
+.cell.type-book{background:var(--accent3);color:var(--ink)}
+.cell-top{display:flex;justify-content:space-between;align-items:flex-start;gap:0.4rem}
+.cell-date{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;opacity:0.85;line-height:1.2}
+.cell-tag{font-family:var(--mono);font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;padding:2px 6px;border:1px solid currentColor;border-radius:2px;opacity:0.8;white-space:nowrap}
+.cell-name{font-family:var(--serif);font-size:1.05rem;font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin-top:auto}
+.cell-contrib{font-family:var(--mono);font-size:10.5px;line-height:1.35;opacity:0.85;margin-top:0.4rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .noresults{padding:3rem;text-align:center;font-size:13px;color:var(--faded);display:none}
 .submit-section{margin:0 2.5rem 5rem;padding:2.5rem;border:1px solid var(--line)}
 .stitle{font-family:var(--serif);font-size:1.6rem;margin-bottom:0.4rem}
@@ -86,7 +82,10 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify
   .submit-section{margin-left:1.25rem;margin-right:1.25rem;padding:1.5rem}
   .fg{grid-template-columns:1fr}.fi.full{grid-column:1}
   footer{padding:1.5rem 1.25rem}
-  .entry{grid-template-columns:80px 22px 1fr}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.45rem}
+  .cell{padding:0.7rem 0.75rem}
+  .cell-name{font-size:0.95rem}
+  .cell-contrib{font-size:10px}
   .si{width:150px}
 }
 </style>
@@ -160,13 +159,16 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify
 
 <script>
 var D=[
+  {y:1875,m:7,d:26,n:"Carl Gustav Jung",t:"person",c:"Archetypes, collective unconscious — psychological types"},
   {y:1888,m:5,d:24,n:"Alex Osborn",t:"person",c:"Brainstorming, Creative Problem Solving (CPS)"},
   {y:1895,m:4,d:17,n:"Vladimir Propp",t:"person",c:"Morphology of the Folktale — structure of narrative"},
   {y:1896,m:11,d:17,n:"Lev Vygotsky",t:"person",c:"Thinking and Speech — zones of proximal development"},
+  {y:1915,m:10,d:8,n:"E. Paul Torrance",t:"person",c:"Torrance Tests of Creative Thinking — father of creativity research"},
   {y:1922,m:6,d:11,n:"Irving Goffman",t:"person",c:"Frame Analysis — theoretical basis of CRAFT methodology"},
   {y:1926,m:10,d:15,n:"Genrich Altshuller",t:"person",c:"TRIZ — Theory of Inventive Problem Solving"},
+  {y:1927,m:10,d:21,n:"Robert Plutchik",t:"person",c:"Wheel of Emotions — psychoevolutionary theory"},
   {y:1933,m:5,d:19,n:"Edward de Bono",t:"person",c:"Lateral Thinking, Six Thinking Hats"},
-  {y:1934,m:9,d:29,n:"Mihaly Csikszentmihalyi",t:"person",c:"Flow theory, 4C model of creativity"},
+  {y:1934,m:9,d:29,n:"Mihaly Csikszentmihalyi",t:"person",c:"Flow — psychology of optimal experience"},
   {y:1935,m:12,d:25,n:"Donald Norman",t:"person",c:"The Design of Everyday Things"},
   {y:1940,m:0,d:0,n:"Michael Michalko",t:"person",c:"Thinkertoys, Cracking Creativity"},
   {y:1941,m:3,d:13,n:"Donella Meadows",t:"person",c:"Thinking in Systems"},
@@ -174,6 +176,7 @@ var D=[
   {y:1943,m:10,d:30,n:"Rolf Faste",t:"person",c:"Introduced Design Thinking into Stanford curriculum"},
   {y:1944,m:0,d:0,n:"John Hegarty",t:"person",c:"BBH — When the world zigs, zag"},
   {y:1946,m:1,d:20,n:"David Lynch",t:"person",c:"Catching the Big Fish — creativity and consciousness"},
+  {y:1947,m:3,d:31,n:"Eliyahu Goldratt",t:"person",c:"Theory of Constraints, The Goal"},
   {y:1947,m:6,d:22,n:"Bruno Latour",t:"person",c:"Actor-Network Theory, frame reassembly"},
   {y:1947,m:0,d:0,n:"Dave Trott",t:"person",c:"Creative Mischief, Predatory Thinking"},
   {y:1948,m:3,d:4,n:"Julia Cameron",t:"person",c:"The Artist's Way — morning pages, creative unblocking"},
@@ -193,14 +196,21 @@ var D=[
   {y:1977,m:0,d:0,n:"Jake Knapp",t:"person",c:"Design Sprint — 5-day creative problem solving"},
   {y:1979,m:9,d:11,n:"Eliezer Yudkowsky",t:"person",c:"HPMOR, Rationality — applied rational thinking"},
   {y:1981,m:8,d:13,n:"Adam Grant",t:"person",c:"Originals — how non-conformists move the world"},
-  {y:9999,m:4,d:26,n:"Vasily Lebedev",t:"person",c:"CRAFT methodology — IKRA School of Creative Thinking"},
+  {y:1985,m:4,d:26,n:"Vasily Lebedev",t:"person",c:"CRAFT methodology — IKRA School of Creative Thinking"},
   {y:1939,m:0,d:0,n:"First brainstorming session",t:"event",c:"Alex Osborn, New York — structured group creativity"},
   {y:1946,m:0,d:0,n:"TRIZ development begins",t:"event",c:"Genrich Altshuller starts systematic research into invention"},
   {y:1954,m:0,d:0,n:"Creative Education Foundation founded",t:"event",c:"Buffalo, NY — home of the CPS methodology"},
+  {y:1966,m:0,d:0,n:"Torrance Tests of Creative Thinking",t:"event",c:"E. Paul Torrance — first standardised assessment of creativity"},
+  {y:1971,m:0,d:0,n:"SCAMPER technique introduced",t:"event",c:"Bob Eberle — Games for Imagination Development"},
   {y:1975,m:0,d:0,n:"Oblique Strategies first published",t:"event",c:"Brian Eno + Peter Schmidt — 100 cards for creative unblocking"},
+  {y:1980,m:0,d:0,n:"Plutchik's Wheel of Emotions",t:"event",c:"Robert Plutchik publishes psychoevolutionary model of 8 primary emotions"},
   {y:1991,m:0,d:0,n:"IDEO founded",t:"event",c:"Merger of David Kelley Design, Moggridge Associates, Matrix Product Design"},
   {y:2006,m:0,d:0,n:"TED: Do Schools Kill Creativity?",t:"event",c:"Ken Robinson — most-watched TED talk in history"},
+  {y:2009,m:0,d:0,n:"Four C Model of Creativity",t:"event",c:"Kaufman & Beghetto — mini-c, little-c, Pro-c, Big-C"},
   {y:2010,m:0,d:0,n:"Design Sprint created at Google",t:"event",c:"Jake Knapp — now used by thousands of teams worldwide"},
+  {y:2015,m:0,d:0,n:"Adobe Kickbox open-sourced",t:"event",c:"Mark Randall — toolkit empowering any employee to test an idea"},
+  {y:2019,m:4,d:0,n:"Adobe Creative Types launched",t:"event",c:"Online creative-personality test — eight archetypes"},
+  {y:2021,m:6,d:0,n:"Divergent Association Task (DAT)",t:"event",c:"Olson et al., PNAS — 4-minute semantic-distance creativity test"},
   {y:2009,m:0,d:0,n:"IKRA School of Creative Thinking founded",t:"event",c:"Moscow — Russia's first school of creative thinking, Vasily Lebedev"},
   {y:2017,m:0,d:0,n:"CRAFT methodology developed",t:"event",c:"Vasily Lebedev at IKRA — youngest creative methodology in the world"},
   {y:2017,m:0,d:0,n:"Creative Happens founded",t:"event",c:"First creative incubator in Russia"},
@@ -214,8 +224,9 @@ var D=[
   {y:2026,m:0,d:0,n:"World's first DPS in Creativity & Change Leadership",t:"event",c:"SUNY Buffalo State — first doctoral degree fully dedicated to creativity"},
   {y:1953,m:0,d:0,n:"Applied Imagination",t:"book",c:"Alex Osborn — the original brainstorming manual"},
   {y:1967,m:0,d:0,n:"The Use of Lateral Thinking",t:"book",c:"Edward de Bono"},
+  {y:1984,m:0,d:0,n:"The Goal",t:"book",c:"Eliyahu Goldratt — Theory of Constraints in novel form"},
   {y:1985,m:0,d:0,n:"Six Thinking Hats",t:"book",c:"Edward de Bono — parallel thinking framework"},
-  {y:1990,m:0,d:0,n:"The Artist's Way",t:"book",c:"Julia Cameron — 12-week creative recovery programme"},
+  {y:1992,m:0,d:0,n:"The Artist's Way",t:"book",c:"Julia Cameron — morning pages, 12-week creative recovery"},
   {y:1993,m:0,d:0,n:"Understanding Comics",t:"book",c:"Scott McCloud — visual language and sequential art"},
   {y:1996,m:0,d:0,n:"Creativity: Flow",t:"book",c:"Mihaly Csikszentmihalyi — optimal experience and creative genius"},
   {y:1997,m:0,d:0,n:"The Innovator's Dilemma",t:"book",c:"Clayton Christensen — disruptive innovation theory"},
@@ -241,6 +252,25 @@ function vis(e){
   return tok&&(e.n.toLowerCase().indexOf(q)!==-1||e.c.toLowerCase().indexOf(q)!==-1);
 }
 
+function decadeKey(y){
+  if(y===9999) return 'ongoing';
+  return Math.floor(y/10)*10;
+}
+function decadeLabel(k){
+  if(k==='ongoing') return 'Ongoing';
+  return k+'s';
+}
+function cellDate(e){
+  if(e.y===9999){
+    if(e.m&&e.d) return MO[e.m-1]+' '+e.d+' · yearly';
+    return 'recurring';
+  }
+  if(!e.m) return String(e.y);
+  if(!e.d) return MO[e.m-1]+' '+e.y;
+  return MO[e.m-1]+' '+e.d+', '+e.y;
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
 function render(){
   var sorted=D.slice().sort(function(a,b){return sk(a)-sk(b);});
   document.getElementById('sp').textContent=D.filter(function(e){return e.t==='person';}).length;
@@ -251,12 +281,12 @@ function render(){
   var groups={};
   for(var i=0;i<sorted.length;i++){
     var e=sorted[i];
-    var k=e.y===9999?'recurring':e.y;
+    var k=decadeKey(e.y);
     if(!groups[k])groups[k]=[];
     groups[k].push(e);
   }
   var keys=Object.keys(groups).sort(function(a,b){
-    if(a==='recurring')return 1;if(b==='recurring')return -1;
+    if(a==='ongoing')return 1;if(b==='ongoing')return -1;
     return Number(a)-Number(b);
   });
 
@@ -265,26 +295,33 @@ function render(){
   var total=0;
 
   for(var ki=0;ki<keys.length;ki++){
-    var yr=keys[ki];
-    var ve=groups[yr].filter(vis);
+    var dk=keys[ki];
+    var ve=groups[dk].filter(vis);
     if(!ve.length)continue;
     total+=ve.length;
 
-    var g=document.createElement('div');g.className='yg';
-    var lbl=document.createElement('div');lbl.className='yl';
-    lbl.innerHTML=(yr==='recurring'?'recurring dates':yr)+
-      ' <span class="yl-sub">'+ve.length+' entr'+(ve.length===1?'y':'ies')+'</span>';
-    g.appendChild(lbl);
+    var g=document.createElement('section');g.className='dec';
+    var h=document.createElement('div');h.className='dec-h';
+    h.innerHTML='<span>'+decadeLabel(dk)+'</span>'+
+      '<span class="dec-h-sub">'+ve.length+' '+(ve.length===1?'entry':'entries')+'</span>';
+    g.appendChild(h);
 
+    var grid=document.createElement('div');grid.className='grid';
     for(var ei=0;ei<ve.length;ei++){
-      var ev=ve[ei];var f=fd(ev);
-      var r=document.createElement('div');r.className='entry type-'+ev.t;
-      r.innerHTML='<div class="edate"><span class="dm">'+f.top+'</span><span class="dd">'+f.bot+'</span></div>'+
-        '<div class="edot"><div class="edot-i"></div></div>'+
-        '<div class="ebody"><span class="badge">'+TL[ev.t]+'</span>'+
-        '<div class="ename">'+ev.n+'</div><div class="econtrib">'+ev.c+'</div></div>';
-      g.appendChild(r);
+      var ev=ve[ei];
+      var c=document.createElement('div');c.className='cell type-'+ev.t;
+      c.innerHTML=
+        '<div class="cell-top">'+
+          '<span class="cell-date">'+esc(cellDate(ev))+'</span>'+
+          '<span class="cell-tag">'+TL[ev.t]+'</span>'+
+        '</div>'+
+        '<div>'+
+          '<div class="cell-name">'+esc(ev.n)+'</div>'+
+          '<div class="cell-contrib">'+esc(ev.c)+'</div>'+
+        '</div>';
+      grid.appendChild(c);
     }
+    g.appendChild(grid);
     tl.appendChild(g);
   }
   document.getElementById('nr').style.display=total===0?'block':'none';
