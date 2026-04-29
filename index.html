@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Creativity Calendar</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23F4EFE6'/><text x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-weight='700' font-size='22' fill='%23E63A1A'>C</text></svg>">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -235,9 +236,9 @@ var D=[
   {y:9999,m:0,d:0,n:"Tony Ulwick",t:"person",c:"Jobs-to-be-Done theory, Outcome-Driven Innovation — founder of Strategyn (1991)"},
   {y:9999,m:0,d:0,n:"David Newman, PhD",t:"person",c:"Creativity Alchemist — LEGO® Serious Play® trainer; teaches creativity at UBC"},
   {y:1996,m:0,d:0,n:"Hyper Island founded",t:"event",c:"Karlskrona, Sweden — Lars Lundh, Jonathan Briggs, David Erixon — transformative digital learning"},
-  {y:2021,m:0,d:0,n:"CRAFT center launched",t:"event",c:"IKRA Group, Bali — educational center for CRAFT methodology"},
+  {y:2021,m:0,d:0,n:"CRAFT center launched",t:"event",c:"IKRA Group — educational center for CRAFT methodology"},
   {y:1949,m:0,d:0,n:"The Hero with a Thousand Faces",t:"book",c:"Joseph Campbell — monomyth, foundation of narrative theory"},
-  {y:1969,m:0,d:0,n:"Алгоритм изобретения",t:"book",c:"Genrich Altshuller — foundational TRIZ text (Eng. trans. The Innovation Algorithm, 1999)"},
+  {y:1969,m:0,d:0,n:"The Innovation Algorithm",t:"book",c:"Genrich Altshuller — foundational TRIZ text (orig. Алгоритм изобретения, English translation 1999)"},
   {y:1997,m:0,d:0,n:"Goldratt's Theory of Constraints",t:"book",c:"H. William Dettmer (ASQC) — systems approach to continuous improvement"},
   {y:2005,m:0,d:0,n:"What Customers Want",t:"book",c:"Tony Ulwick (McGraw Hill) — original Outcome-Driven Innovation / JTBD"},
   {y:2014,m:0,d:0,n:"Building a Better Business Using LEGO® SERIOUS PLAY®",t:"book",c:"Per Kristiansen & Robert Rasmussen (Wiley) — practitioner guide to LSP"},
@@ -266,10 +267,12 @@ function vis(e){
 
 function decadeKey(y){
   if(y===9999) return 'ongoing';
+  if(y<1900) return 'pre1900';
   return Math.floor(y/10)*10;
 }
 function decadeLabel(k){
   if(k==='ongoing') return 'Ongoing';
+  if(k==='pre1900') return 'Pre-20th Century';
   return k+'s';
 }
 function cellDate(e){
@@ -299,6 +302,7 @@ function render(){
   }
   var keys=Object.keys(groups).sort(function(a,b){
     if(a==='ongoing')return 1;if(b==='ongoing')return -1;
+    if(a==='pre1900')return -1;if(b==='pre1900')return 1;
     return Number(a)-Number(b);
   });
 
