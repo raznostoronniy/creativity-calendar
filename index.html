@@ -14,6 +14,12 @@
   --serif:Georgia,'Times New Roman',serif;
   --mono:'Courier New',Courier,monospace;
 }
+[data-theme="dark"]{
+  --cream:#1C1914;--ink:#F0EBE1;--faded:#8A8478;
+  --line:rgba(240,235,225,0.15);
+}
+.theme-toggle{font-family:var(--mono);font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--line);cursor:pointer;background:transparent;color:var(--faded);transition:all 0.15s;letter-spacing:0.06em}
+.theme-toggle:hover{border-color:var(--ink);color:var(--ink)}
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--ink);font-family:var(--mono);min-height:100vh;line-height:1.6}
 .header{padding:3.5rem 2.5rem 2.5rem;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem}
@@ -97,6 +103,7 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify
   .si{width:150px}
 }
 </style>
+<script>(function(){var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
 
@@ -131,6 +138,7 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify
     <span class="sicon">&#9906;</span>
     <input class="si" id="search" type="text" placeholder="search name or contribution...">
   </div>
+  <button class="theme-toggle" id="themeBtn" aria-label="Toggle dark mode"></button>
 </div>
 
 <div class="timeline-wrap">
@@ -419,6 +427,19 @@ function doSubmit(){
 }
 
 render();
+
+(function(){
+  var btn=document.getElementById('themeBtn');
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme',t);
+    localStorage.setItem('theme',t);
+    btn.textContent=t==='dark'?'☀ light':'☾ dark';
+  }
+  applyTheme(document.documentElement.getAttribute('data-theme')||'light');
+  btn.addEventListener('click',function(){
+    applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+  });
+})();
 </script>
 </body>
 </html>
