@@ -47,8 +47,15 @@ body{background:var(--cream);color:var(--ink);font-family:var(--mono);min-height
 .dec-h{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;line-height:1;letter-spacing:-0.02em;color:var(--ink);margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:2px solid var(--ink);display:flex;align-items:baseline;justify-content:space-between;gap:0.75rem}
 .dec-h-sub{font-family:var(--mono);font-size:11px;color:var(--faded);letter-spacing:0.1em;text-transform:uppercase;font-weight:400}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:0.6rem}
-.cell{aspect-ratio:1;padding:0.85rem 0.95rem;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:transform 0.12s ease, box-shadow 0.12s ease;cursor:default}
-.cell:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink);z-index:2}
+.cell{aspect-ratio:1;padding:0.85rem 0.95rem;border:1.5px solid var(--ink);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:transform 0.12s ease, box-shadow 0.12s ease;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+a.cell{color:inherit}
+a.cell.type-person{color:var(--cream)}
+a.cell.type-event{color:var(--cream)}
+a.cell.type-book{color:var(--ink)}
+@media(hover:hover){
+  .cell:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink);z-index:2}
+}
+.cell:active{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--ink);z-index:2}
 .cell.hidden{display:none}
 .cell.type-person{background:var(--accent2);color:var(--cream)}
 .cell.type-event{background:var(--accent);color:var(--cream)}
@@ -160,92 +167,91 @@ footer{padding:2rem 2.5rem;border-top:1px solid var(--line);display:flex;justify
 
 <script>
 var D=[
-  {y:1875,m:7,d:26,n:"Carl Gustav Jung",t:"person",c:"Archetypes, collective unconscious — psychological types"},
-  {y:1888,m:5,d:24,n:"Alex Osborn",t:"person",c:"Brainstorming, Creative Problem Solving (CPS)"},
-  {y:1895,m:4,d:17,n:"Vladimir Propp",t:"person",c:"Morphology of the Folktale — structure of narrative"},
-  {y:1896,m:11,d:17,n:"Lev Vygotsky",t:"person",c:"Thinking and Speech — zones of proximal development"},
-  {y:1915,m:10,d:8,n:"E. Paul Torrance",t:"person",c:"Torrance Tests of Creative Thinking — father of creativity research"},
-  {y:1922,m:6,d:11,n:"Irving Goffman",t:"person",c:"Frame Analysis — theoretical basis of CRAFT methodology"},
-  {y:1926,m:10,d:15,n:"Genrich Altshuller",t:"person",c:"TRIZ — Theory of Inventive Problem Solving"},
-  {y:1927,m:10,d:21,n:"Robert Plutchik",t:"person",c:"Wheel of Emotions — psychoevolutionary theory"},
-  {y:1933,m:5,d:19,n:"Edward de Bono",t:"person",c:"Lateral Thinking, Six Thinking Hats"},
-  {y:1934,m:9,d:29,n:"Mihaly Csikszentmihalyi",t:"person",c:"Flow — psychology of optimal experience"},
-  {y:1935,m:12,d:25,n:"Donald Norman",t:"person",c:"The Design of Everyday Things"},
-  {y:1940,m:0,d:0,n:"Michael Michalko",t:"person",c:"Thinkertoys, Cracking Creativity"},
-  {y:1941,m:3,d:13,n:"Donella Meadows",t:"person",c:"Thinking in Systems"},
-  {y:1942,m:6,d:2,n:"Tony Buzan",t:"person",c:"Mind Mapping"},
-  {y:1943,m:10,d:30,n:"Rolf Faste",t:"person",c:"Introduced Design Thinking into Stanford curriculum"},
-  {y:1944,m:0,d:0,n:"John Hegarty",t:"person",c:"BBH — When the world zigs, zag"},
-  {y:1946,m:1,d:20,n:"David Lynch",t:"person",c:"Catching the Big Fish — creativity and consciousness"},
-  {y:1947,m:3,d:31,n:"Eliyahu Goldratt",t:"person",c:"Theory of Constraints, The Goal"},
-  {y:1947,m:6,d:22,n:"Bruno Latour",t:"person",c:"Actor-Network Theory, frame reassembly"},
-  {y:1947,m:0,d:0,n:"Dave Trott",t:"person",c:"Creative Mischief, Predatory Thinking"},
-  {y:1948,m:3,d:4,n:"Julia Cameron",t:"person",c:"The Artist's Way — morning pages, creative unblocking"},
-  {y:1948,m:5,d:15,n:"Brian Eno",t:"person",c:"Oblique Strategies — generative creativity"},
-  {y:1948,m:6,d:22,n:"Roger von Oech",t:"person",c:"Whack on the Side of the Head"},
-  {y:1950,m:3,d:4,n:"Ken Robinson",t:"person",c:"Do Schools Kill Creativity? — most-watched TED talk"},
-  {y:1950,m:10,d:26,n:"Teresa Amabile",t:"person",c:"Intrinsic motivation and creativity research"},
-  {y:1951,m:9,d:23,n:"David Kelley",t:"person",c:"IDEO founder, Design Thinking"},
-  {y:1952,m:4,d:6,n:"Clayton Christensen",t:"person",c:"Jobs to Be Done, Disruptive Innovation"},
-  {y:1955,m:3,d:21,n:"Robert Dilts",t:"person",c:"NLP Logical Levels, Strategies of Genius"},
-  {y:1960,m:6,d:10,n:"Scott McCloud",t:"person",c:"Understanding Comics — visual grammar of storytelling"},
-  {y:1960,m:11,d:10,n:"Neil Gaiman",t:"person",c:"Make Good Art — storytelling and creative freedom"},
-  {y:1962,m:0,d:0,n:"Mark Levy",t:"person",c:"Freewriting — Accidental Genius"},
-  {y:1962,m:6,d:24,n:"Tim Brown",t:"person",c:"IDEO CEO, Change by Design"},
-  {y:1963,m:3,d:10,n:"Rick Rubin",t:"person",c:"The Creative Act — creativity as a way of being"},
-  {y:1974,m:9,d:11,n:"Andrey Kurpatov",t:"person",c:"Methodology of Thinking, brain science popularisation"},
-  {y:1977,m:0,d:0,n:"Jake Knapp",t:"person",c:"Design Sprint — 5-day creative problem solving"},
-  {y:1979,m:9,d:11,n:"Eliezer Yudkowsky",t:"person",c:"HPMOR, Rationality — applied rational thinking"},
-  {y:1981,m:8,d:13,n:"Adam Grant",t:"person",c:"Originals — how non-conformists move the world"},
-  {y:1985,m:4,d:26,n:"Vasily Lebedev",t:"person",c:"CRAFT methodology — IKRA School of Creative Thinking"},
-  {y:1939,m:0,d:0,n:"First brainstorming session",t:"event",c:"Alex Osborn, New York — structured group creativity"},
-  {y:1946,m:0,d:0,n:"TRIZ development begins",t:"event",c:"Genrich Altshuller starts systematic research into invention"},
-  {y:1954,m:0,d:0,n:"Creative Education Foundation founded",t:"event",c:"Buffalo, NY — home of the CPS methodology"},
-  {y:1966,m:0,d:0,n:"Torrance Tests of Creative Thinking",t:"event",c:"E. Paul Torrance — first standardised assessment of creativity"},
-  {y:1971,m:0,d:0,n:"SCAMPER technique introduced",t:"event",c:"Bob Eberle — Games for Imagination Development"},
-  {y:1975,m:0,d:0,n:"Oblique Strategies first published",t:"event",c:"Brian Eno + Peter Schmidt — 100 cards for creative unblocking"},
-  {y:1980,m:0,d:0,n:"Plutchik's Wheel of Emotions",t:"event",c:"Robert Plutchik publishes psychoevolutionary model of 8 primary emotions"},
-  {y:1991,m:0,d:0,n:"IDEO founded",t:"event",c:"Merger of David Kelley Design, Moggridge Associates, Matrix Product Design"},
-  {y:2006,m:0,d:0,n:"TED: Do Schools Kill Creativity?",t:"event",c:"Ken Robinson — most-watched TED talk in history"},
-  {y:2009,m:0,d:0,n:"Four C Model of Creativity",t:"event",c:"Kaufman & Beghetto — mini-c, little-c, Pro-c, Big-C"},
-  {y:2010,m:0,d:0,n:"Design Sprint created at Google",t:"event",c:"Jake Knapp — now used by thousands of teams worldwide"},
-  {y:2015,m:0,d:0,n:"Adobe Kickbox open-sourced",t:"event",c:"Mark Randall — toolkit empowering any employee to test an idea"},
-  {y:2019,m:4,d:0,n:"Adobe Creative Types launched",t:"event",c:"Online creative-personality test — eight archetypes"},
-  {y:2021,m:6,d:0,n:"Divergent Association Task (DAT)",t:"event",c:"Olson et al., PNAS — 4-minute semantic-distance creativity test"},
-  {y:2009,m:0,d:0,n:"IKRA School of Creative Thinking founded",t:"event",c:"Moscow — Russia's first school of creative thinking, Vasily Lebedev"},
-  {y:2017,m:0,d:0,n:"CRAFT methodology developed",t:"event",c:"Vasily Lebedev at IKRA — youngest creative methodology in the world"},
-  {y:2017,m:0,d:0,n:"Creative Happens founded",t:"event",c:"First creative incubator in Russia"},
-  {y:2018,m:4,d:21,n:"World Creativity & Innovation Day",t:"event",c:"Officially recognised by the UN — celebrated every 21 April"},
-  {y:1996,m:0,d:0,n:"Lego Serious Play concept created",t:"event",c:"Johan Roos & Bart Victor at IMD Lausanne — strategy through hands-on building"},
-  {y:1999,m:0,d:0,n:"First LSP academic paper published",t:"event",c:"Roos & Victor in European Management Journal — legitimising serious play"},
-  {y:2001,m:0,d:0,n:"Lego Serious Play officially launched",t:"event",c:"Commercial product release — Executive Discovery LLC"},
-  {y:2010,m:0,d:0,n:"LSP released as open source",t:"event",c:"LEGO Group publishes method under Creative Commons license"},
-  {y:1967,m:0,d:0,n:"World's first Master's degree in Creativity",t:"event",c:"SUNY Buffalo State — International Center for Studies in Creativity"},
-  {y:2004,m:0,d:0,n:"Stanford d.school founded",t:"event",c:"David Kelley & Bernard Roth — home of Design Thinking education"},
-  {y:2026,m:0,d:0,n:"World's first DPS in Creativity & Change Leadership",t:"event",c:"SUNY Buffalo State — first doctoral degree fully dedicated to creativity"},
-  {y:1953,m:0,d:0,n:"Applied Imagination",t:"book",c:"Alex Osborn — the original brainstorming manual"},
-  {y:1967,m:0,d:0,n:"The Use of Lateral Thinking",t:"book",c:"Edward de Bono"},
-  {y:1984,m:0,d:0,n:"The Goal",t:"book",c:"Eliyahu Goldratt — Theory of Constraints in novel form"},
-  {y:1985,m:0,d:0,n:"Six Thinking Hats",t:"book",c:"Edward de Bono — parallel thinking framework"},
-  {y:1992,m:0,d:0,n:"The Artist's Way",t:"book",c:"Julia Cameron — morning pages, 12-week creative recovery"},
-  {y:1993,m:0,d:0,n:"Understanding Comics",t:"book",c:"Scott McCloud — visual language and sequential art"},
-  {y:1996,m:0,d:0,n:"Creativity: Flow",t:"book",c:"Mihaly Csikszentmihalyi — optimal experience and creative genius"},
-  {y:1997,m:0,d:0,n:"The Innovator's Dilemma",t:"book",c:"Clayton Christensen — disruptive innovation theory"},
-  {y:2023,m:1,d:17,n:"The Creative Act: A Way of Being",t:"book",c:"Rick Rubin — creativity as spiritual practice"},
-  {y:1968,m:1,d:22,n:"James Altucher",t:"person",c:"Choose Yourself, Skip the Line — entrepreneurship and reinvention as creative practice"},
-  {y:9999,m:0,d:0,n:"Tony Ulwick",t:"person",c:"Jobs-to-be-Done theory, Outcome-Driven Innovation — founder of Strategyn (1991)"},
-  {y:9999,m:0,d:0,n:"David Newman, PhD",t:"person",c:"Creativity Alchemist — LEGO® Serious Play® trainer; teaches creativity at UBC"},
-  {y:1996,m:0,d:0,n:"Hyper Island founded",t:"event",c:"Karlskrona, Sweden — Lars Lundh, Jonathan Briggs, David Erixon — transformative digital learning"},
-  {y:2021,m:0,d:0,n:"CRAFT center launched",t:"event",c:"IKRA Group — educational center for CRAFT methodology"},
-  {y:1949,m:0,d:0,n:"The Hero with a Thousand Faces",t:"book",c:"Joseph Campbell — monomyth, foundation of narrative theory"},
-  {y:1969,m:0,d:0,n:"The Innovation Algorithm",t:"book",c:"Genrich Altshuller — foundational TRIZ text (orig. Алгоритм изобретения, English translation 1999)"},
-  {y:1997,m:0,d:0,n:"Goldratt's Theory of Constraints",t:"book",c:"H. William Dettmer (ASQC) — systems approach to continuous improvement"},
-  {y:2005,m:0,d:0,n:"What Customers Want",t:"book",c:"Tony Ulwick (McGraw Hill) — original Outcome-Driven Innovation / JTBD"},
-  {y:2014,m:0,d:0,n:"Building a Better Business Using LEGO® SERIOUS PLAY®",t:"book",c:"Per Kristiansen & Robert Rasmussen (Wiley) — practitioner guide to LSP"},
-  {y:2017,m:0,d:0,n:"CRAFT: How to Create Big Ideas",t:"book",c:"Vasily Lebedev (IKRA) — first book on CRAFT methodology"},
-  {y:2018,m:0,d:0,n:"The Design Thinking Playbook",t:"book",c:"Michael Lewrick, Patrick Link, Larry Leifer (Wiley) — applied design thinking"},
-  {y:1917,m:0,d:0,n:"Intelligenzprüfungen an Menschenaffen",t:"book",c:"Wolfgang Köhler — introduced 'insight' (Einsicht) into problem-solving research; English ed. The Mentality of Apes, 1925"},
-  {y:1926,m:0,d:0,n:"The Art of Thought",t:"book",c:"Graham Wallas — first model placing 'idea' within a 4-stage creative process: preparation, incubation, illumination, verification"}
+  {y:1875,m:7,d:26,n:"Carl Gustav Jung",t:"person",c:"Archetypes, collective unconscious — psychological types",u:"https://en.wikipedia.org/wiki/Carl_Jung"},
+  {y:1888,m:5,d:24,n:"Alex Osborn",t:"person",c:"Brainstorming, Creative Problem Solving (CPS)",u:"https://en.wikipedia.org/wiki/Alex_Faickney_Osborn"},
+  {y:1895,m:4,d:17,n:"Vladimir Propp",t:"person",c:"Morphology of the Folktale — structure of narrative",u:"https://en.wikipedia.org/wiki/Vladimir_Propp"},
+  {y:1896,m:11,d:17,n:"Lev Vygotsky",t:"person",c:"Thinking and Speech — zones of proximal development",u:"https://en.wikipedia.org/wiki/Lev_Vygotsky"},
+  {y:1915,m:10,d:8,n:"E. Paul Torrance",t:"person",c:"Torrance Tests of Creative Thinking — father of creativity research",u:"https://en.wikipedia.org/wiki/Ellis_Paul_Torrance"},
+  {y:1922,m:6,d:11,n:"Erving Goffman",t:"person",c:"Frame Analysis — theoretical basis of CRAFT methodology",u:"https://en.wikipedia.org/wiki/Erving_Goffman"},
+  {y:1926,m:10,d:15,n:"Genrich Altshuller",t:"person",c:"TRIZ — Theory of Inventive Problem Solving",u:"https://en.wikipedia.org/wiki/Genrich_Altshuller"},
+  {y:1927,m:10,d:21,n:"Robert Plutchik",t:"person",c:"Wheel of Emotions — psychoevolutionary theory",u:"https://en.wikipedia.org/wiki/Robert_Plutchik"},
+  {y:1933,m:5,d:19,n:"Edward de Bono",t:"person",c:"Lateral Thinking, Six Thinking Hats",u:"https://en.wikipedia.org/wiki/Edward_de_Bono"},
+  {y:1934,m:9,d:29,n:"Mihaly Csikszentmihalyi",t:"person",c:"Flow — psychology of optimal experience",u:"https://en.wikipedia.org/wiki/Mihaly_Csikszentmihalyi"},
+  {y:1935,m:12,d:25,n:"Donald Norman",t:"person",c:"The Design of Everyday Things",u:"https://www.linkedin.com/in/donnorman/"},
+  {y:1940,m:0,d:0,n:"Michael Michalko",t:"person",c:"Thinkertoys, Cracking Creativity",u:"https://www.goodreads.com/author/show/59905.Michael_Michalko"},
+  {y:1941,m:3,d:13,n:"Donella Meadows",t:"person",c:"Thinking in Systems",u:"https://en.wikipedia.org/wiki/Donella_Meadows"},
+  {y:1942,m:6,d:2,n:"Tony Buzan",t:"person",c:"Mind Mapping",u:"https://en.wikipedia.org/wiki/Tony_Buzan"},
+  {y:1943,m:10,d:30,n:"Rolf Faste",t:"person",c:"Introduced Design Thinking into Stanford curriculum",u:"https://en.wikipedia.org/wiki/Rolf_Faste"},
+  {y:1944,m:0,d:0,n:"John Hegarty",t:"person",c:"BBH — When the world zigs, zag",u:"https://www.linkedin.com/in/sir-john-hegarty-a1310a92/"},
+  {y:1946,m:1,d:20,n:"David Lynch",t:"person",c:"Catching the Big Fish — creativity and consciousness",u:"https://en.wikipedia.org/wiki/David_Lynch"},
+  {y:1947,m:3,d:31,n:"Eliyahu Goldratt",t:"person",c:"Theory of Constraints, The Goal",u:"https://en.wikipedia.org/wiki/Eliyahu_M._Goldratt"},
+  {y:1947,m:6,d:22,n:"Bruno Latour",t:"person",c:"Actor-Network Theory, frame reassembly",u:"https://en.wikipedia.org/wiki/Bruno_Latour"},
+  {y:1947,m:0,d:0,n:"Dave Trott",t:"person",c:"Creative Mischief, Predatory Thinking",u:"https://davetrott.co.uk/"},
+  {y:1948,m:3,d:4,n:"Julia Cameron",t:"person",c:"The Artist's Way — morning pages, creative unblocking",u:"https://juliacameronlive.com/"},
+  {y:1948,m:5,d:15,n:"Brian Eno",t:"person",c:"Oblique Strategies — generative creativity",u:"https://en.wikipedia.org/wiki/Brian_Eno"},
+  {y:1948,m:6,d:22,n:"Roger von Oech",t:"person",c:"Whack on the Side of the Head",u:"https://creativethink.com/"},
+  {y:1950,m:3,d:4,n:"Ken Robinson",t:"person",c:"Do Schools Kill Creativity? — most-watched TED talk",u:"https://en.wikipedia.org/wiki/Ken_Robinson_(educationalist)"},
+  {y:1950,m:10,d:26,n:"Teresa Amabile",t:"person",c:"Intrinsic motivation and creativity research",u:"https://www.linkedin.com/in/teresa-amabile-8542727"},
+  {y:1951,m:9,d:23,n:"David Kelley",t:"person",c:"IDEO founder, Design Thinking",u:"https://www.ideo.com/leaders/david-kelley"},
+  {y:1952,m:4,d:6,n:"Clayton Christensen",t:"person",c:"Jobs to Be Done, Disruptive Innovation",u:"https://en.wikipedia.org/wiki/Clayton_Christensen"},
+  {y:1955,m:3,d:21,n:"Robert Dilts",t:"person",c:"NLP Logical Levels, Strategies of Genius",u:"https://de.wikipedia.org/wiki/Robert_Dilts"},
+  {y:1960,m:6,d:10,n:"Scott McCloud",t:"person",c:"Understanding Comics — visual grammar of storytelling",u:"https://scottmccloud.com/"},
+  {y:1960,m:11,d:10,n:"Neil Gaiman",t:"person",c:"Make Good Art — storytelling and creative freedom",u:"https://en.wikipedia.org/wiki/Neil_Gaiman"},
+  {y:1962,m:0,d:0,n:"Mark Levy",t:"person",c:"Freewriting — Accidental Genius",u:"https://www.levyinnovation.com/about/"},
+  {y:1962,m:6,d:24,n:"Tim Brown",t:"person",c:"IDEO CEO, Change by Design",u:"https://www.linkedin.com/in/timbrownatlindkedin"},
+  {y:1963,m:3,d:10,n:"Rick Rubin",t:"person",c:"The Creative Act — creativity as a way of being",u:"https://en.wikipedia.org/wiki/Rick_Rubin"},
+  {y:1974,m:9,d:11,n:"Andrey Kurpatov",t:"person",c:"Methodology of Thinking, brain science popularisation",u:"https://www.kurpatov.ru/"},
+  {y:1977,m:0,d:0,n:"Jake Knapp",t:"person",c:"Design Sprint — 5-day creative problem solving",u:"https://www.linkedin.com/in/jake-knapp"},
+  {y:1979,m:9,d:11,n:"Eliezer Yudkowsky",t:"person",c:"HPMOR, Rationality — applied rational thinking",u:"https://en.wikipedia.org/wiki/Eliezer_Yudkowsky"},
+  {y:1981,m:8,d:13,n:"Adam Grant",t:"person",c:"Originals — how non-conformists move the world",u:"https://www.linkedin.com/in/adammgrant/"},
+  {y:1985,m:4,d:26,n:"Vasily Lebedev",t:"person",c:"CRAFT methodology — IKRA School of Creative Thinking",u:"https://ikra.global/"},
+  {y:1939,m:0,d:0,n:"First brainstorming session",t:"event",c:"Alex Osborn, New York — structured group creativity",u:"https://en.wikipedia.org/wiki/Brainstorming"},
+  {y:1946,m:0,d:0,n:"TRIZ development begins",t:"event",c:"Genrich Altshuller starts systematic research into invention",u:"https://en.wikipedia.org/wiki/TRIZ"},
+  {y:1954,m:0,d:0,n:"Creative Education Foundation founded",t:"event",c:"Buffalo, NY — home of the CPS methodology",u:"https://www.creativeeducationfoundation.org/"},
+  {y:1966,m:0,d:0,n:"Torrance Tests of Creative Thinking",t:"event",c:"E. Paul Torrance — first standardised assessment of creativity",u:"https://en.wikipedia.org/wiki/Torrance_Tests_of_Creative_Thinking"},
+  {y:1971,m:0,d:0,n:"SCAMPER technique introduced",t:"event",c:"Bob Eberle — Games for Imagination Development",u:"https://en.wikipedia.org/wiki/SCAMPER"},
+  {y:1975,m:0,d:0,n:"Oblique Strategies first published",t:"event",c:"Brian Eno + Peter Schmidt — 100 cards for creative unblocking",u:"https://en.wikipedia.org/wiki/Oblique_Strategies"},
+  {y:1980,m:0,d:0,n:"Plutchik's Wheel of Emotions",t:"event",c:"Robert Plutchik publishes psychoevolutionary model of 8 primary emotions",u:"https://en.wikipedia.org/wiki/Robert_Plutchik"},
+  {y:1991,m:0,d:0,n:"IDEO founded",t:"event",c:"Merger of David Kelley Design, Moggridge Associates, Matrix Product Design",u:"https://www.ideo.com/"},
+  {y:2006,m:0,d:0,n:"TED: Do Schools Kill Creativity?",t:"event",c:"Ken Robinson — most-watched TED talk in history",u:"https://www.ted.com/talks/sir_ken_robinson_do_schools_kill_creativity"},
+  {y:2009,m:0,d:0,n:"Four C Model of Creativity",t:"event",c:"Kaufman & Beghetto — mini-c, little-c, Pro-c, Big-C",u:"https://www.researchgate.net/publication/228345133_Beyond_Big_and_Little_The_Four_C_Model_of_Creativity"},
+  {y:2010,m:0,d:0,n:"Design Sprint created at Google",t:"event",c:"Jake Knapp — now used by thousands of teams worldwide",u:"https://en.wikipedia.org/wiki/Design_sprint"},
+  {y:2015,m:0,d:0,n:"Adobe Kickbox open-sourced",t:"event",c:"Mark Randall — toolkit empowering any employee to test an idea",u:"https://kickbox.org/"},
+  {y:2019,m:4,d:0,n:"Adobe Creative Types launched",t:"event",c:"Online creative-personality test — eight archetypes",u:"https://mycreativetype.com/"},
+  {y:2021,m:6,d:0,n:"Divergent Association Task (DAT)",t:"event",c:"Olson et al., PNAS — 4-minute semantic-distance creativity test",u:"https://www.datcreativity.com/"},
+  {y:2009,m:0,d:0,n:"IKRA School of Creative Thinking founded",t:"event",c:"Moscow — Russia's first school of creative thinking, Vasily Lebedev",u:"https://ikraikra.ru/"},
+  {y:2017,m:0,d:0,n:"CRAFT methodology developed",t:"event",c:"Vasily Lebedev at IKRA — youngest creative methodology in the world",u:"https://craft.expert/"},
+  {y:2017,m:0,d:0,n:"Creative Happens founded",t:"event",c:"First creative incubator in Russia",u:"https://creativehappens.ru/en/"},
+  {y:2018,m:4,d:21,n:"World Creativity & Innovation Day",t:"event",c:"Officially recognised by the UN — celebrated every 21 April",u:"https://en.wikipedia.org/wiki/World_Creativity_and_Innovation_Day"},
+  {y:1996,m:0,d:0,n:"Lego Serious Play concept created",t:"event",c:"Johan Roos & Bart Victor at IMD Lausanne — strategy through hands-on building",u:"https://en.wikipedia.org/wiki/Lego_Serious_Play"},
+  {y:1999,m:0,d:0,n:"First LSP academic paper published",t:"event",c:"Roos & Victor in European Management Journal — legitimising serious play",u:"https://en.wikipedia.org/wiki/Lego_Serious_Play"},
+  {y:2001,m:0,d:0,n:"Lego Serious Play officially launched",t:"event",c:"Commercial product release — Executive Discovery LLC",u:"https://www.lego.com/en-us/seriousplay"},
+  {y:2010,m:0,d:0,n:"LSP released as open source",t:"event",c:"LEGO Group publishes method under Creative Commons license",u:"https://en.wikipedia.org/wiki/Lego_Serious_Play"},
+  {y:1967,m:0,d:0,n:"World's first Master's degree in Creativity",t:"event",c:"SUNY Buffalo State — International Center for Studies in Creativity",u:"https://creativity.buffalostate.edu/"},
+  {y:2004,m:0,d:0,n:"Stanford d.school founded",t:"event",c:"David Kelley & Bernard Roth — home of Design Thinking education",u:"https://dschool.stanford.edu/"},
+  {y:2026,m:0,d:0,n:"World's first DPS in Creativity & Change Leadership",t:"event",c:"SUNY Buffalo State — first doctoral degree fully dedicated to creativity",u:"https://creativity.buffalostate.edu/"},
+  {y:1953,m:0,d:0,n:"Applied Imagination",t:"book",c:"Alex Osborn — the original brainstorming manual",u:"https://en.wikipedia.org/wiki/Alex_Faickney_Osborn"},
+  {y:1967,m:0,d:0,n:"The Use of Lateral Thinking",t:"book",c:"Edward de Bono",u:"https://en.wikipedia.org/wiki/Lateral_thinking"},
+  {y:1984,m:0,d:0,n:"The Goal",t:"book",c:"Eliyahu Goldratt — Theory of Constraints in novel form",u:"https://en.wikipedia.org/wiki/The_Goal_(novel)"},
+  {y:1985,m:0,d:0,n:"Six Thinking Hats",t:"book",c:"Edward de Bono — parallel thinking framework",u:"https://en.wikipedia.org/wiki/Six_Thinking_Hats"},
+  {y:1992,m:0,d:0,n:"The Artist's Way",t:"book",c:"Julia Cameron — morning pages, 12-week creative recovery",u:"https://en.wikipedia.org/wiki/The_Artist%27s_Way"},
+  {y:1993,m:0,d:0,n:"Understanding Comics",t:"book",c:"Scott McCloud — visual language and sequential art",u:"https://en.wikipedia.org/wiki/Understanding_Comics"},
+  {y:1996,m:0,d:0,n:"Creativity: Flow",t:"book",c:"Mihaly Csikszentmihalyi — optimal experience and creative genius",u:"https://en.wikipedia.org/wiki/Flow_(psychology)"},
+  {y:1997,m:0,d:0,n:"The Innovator's Dilemma",t:"book",c:"Clayton Christensen — disruptive innovation theory",u:"https://en.wikipedia.org/wiki/The_Innovator%27s_Dilemma"},
+  {y:2023,m:1,d:17,n:"The Creative Act: A Way of Being",t:"book",c:"Rick Rubin — creativity as spiritual practice",u:"https://www.amazon.com/Creative-Act-Way-Being-ebook/dp/B09Z7MH5C3/"},
+  {y:1968,m:1,d:22,n:"James Altucher",t:"person",c:"Choose Yourself, Skip the Line — entrepreneurship and reinvention as creative practice",u:"https://www.linkedin.com/in/jamesaltucher"},
+  {y:9999,m:0,d:0,n:"Tony Ulwick",t:"person",c:"Jobs-to-be-Done theory, Outcome-Driven Innovation — founder of Strategyn (1991)",u:"https://www.linkedin.com/in/tonyulwick"},
+  {y:9999,m:0,d:0,n:"David Newman, PhD",t:"person",c:"Creativity Alchemist — LEGO® Serious Play® trainer; teaches creativity at UBC",u:"https://www.linkedin.com/in/creativityalchemist/"},
+  {y:1996,m:0,d:0,n:"Hyper Island founded",t:"event",c:"Karlskrona, Sweden — Lars Lundh, Jonathan Briggs, David Erixon — transformative digital learning",u:"https://www.hyperisland.com/"},
+  {y:2021,m:0,d:0,n:"CRAFT center launched",t:"event",c:"IKRA Group — educational center for CRAFT methodology",u:"https://www.linkedin.com/showcase/craft-expert/about/"},
+  {y:1949,m:0,d:0,n:"The Hero with a Thousand Faces",t:"book",c:"Joseph Campbell — monomyth, foundation of narrative theory",u:"https://en.wikipedia.org/wiki/The_Hero_with_a_Thousand_Faces"},
+  {y:1969,m:0,d:0,n:"The Innovation Algorithm",t:"book",c:"Genrich Altshuller — foundational TRIZ text (orig. Алгоритм изобретения, English translation 1999)",u:"https://en.wikipedia.org/wiki/Genrich_Altshuller"},
+  {y:2005,m:0,d:0,n:"What Customers Want",t:"book",c:"Tony Ulwick (McGraw Hill) — original Outcome-Driven Innovation / JTBD",u:"https://strategyn.com/what-customers-want/"},
+  {y:2014,m:0,d:0,n:"Building a Better Business Using LEGO® SERIOUS PLAY®",t:"book",c:"Per Kristiansen & Robert Rasmussen (Wiley) — practitioner guide to LSP",u:"https://www.wiley.com/en-us/Building+a+Better+Business+Using+the+Lego+Serious+Play+Method-p-9781118832455"},
+  {y:2017,m:0,d:0,n:"CRAFT: How to Create Big Ideas",t:"book",c:"Vasily Lebedev (IKRA) — first book on CRAFT methodology",u:"https://craft.expert/book"},
+  {y:2018,m:0,d:0,n:"The Design Thinking Playbook",t:"book",c:"Michael Lewrick, Patrick Link, Larry Leifer (Wiley) — applied design thinking",u:"https://www.wiley.com/en-us/The+Design+Thinking+Playbook-p-9781119467472"},
+  {y:1917,m:0,d:0,n:"The Mentality of Apes",t:"book",c:"Wolfgang Köhler — introduced 'insight' (Einsicht) into problem-solving research; orig. Intelligenzprüfungen an Menschenaffen, English ed. 1925",u:"https://en.wikipedia.org/wiki/The_Mentality_of_Apes"},
+  {y:1926,m:0,d:0,n:"The Art of Thought",t:"book",c:"Graham Wallas — first model placing 'idea' within a 4-stage creative process: preparation, incubation, illumination, verification",u:"https://en.wikipedia.org/wiki/Graham_Wallas"}
 ];
 
 var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -327,7 +333,16 @@ function render(){
     var grid=document.createElement('div');grid.className='grid';
     for(var ei=0;ei<ve.length;ei++){
       var ev=ve[ei];
-      var c=document.createElement('div');c.className='cell type-'+ev.t;
+      var c;
+      if(ev.u){
+        c=document.createElement('a');
+        c.href=ev.u;
+        c.target='_blank';
+        c.rel='noopener noreferrer';
+      }else{
+        c=document.createElement('div');
+      }
+      c.className='cell type-'+ev.t;
       c.innerHTML=
         '<div class="cell-top">'+
           '<span class="cell-date">'+esc(cellDate(ev))+'</span>'+
